@@ -20,7 +20,7 @@ var (
 
 // Do Perform the dial, it returns a message to print to the user.
 // If debug != nil debug will be used as debug chan else it will be ignored.
-func Do(debug io.Writer) string {
+func Do() string {
 	runLock.Lock()
 	if running {
 		runLock.Unlock()
@@ -39,7 +39,7 @@ func Do(debug io.Writer) string {
 		return fmt.Sprintf("Can't dial golang : %q", err)
 	}
 	// Starting tor node
-	t, err := tor.Start(nil, &tor.StartConf{ProcessCreator: libtor.Creator, DebugWriter: debug})
+	t, err := tor.Start(nil, &tor.StartConf{ProcessCreator: libtor.Creator, DebugWriter: nil})
 	if err != nil {
 		return fmt.Sprintf("Failed to start tor : %q", err)
 	}
